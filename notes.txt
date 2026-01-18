@@ -1,0 +1,28 @@
+1- extract go in usr/local/ (fresh)
+2- use 'go mod "name of repo" to create .mod file (contains meta data??)
+3- create your main.go file and type in "package main" to tell it where the main is to run
+4- import 'fmt' to use print (importing & not using lib will error)
+((4.5- fmt.Println(..) auto new line, Print(..) not))
+5- use 'go build' to build project aka make binary file -> run './main'
+6- or use 'go run main.go' to do both
+7- to use variables write 'var' first then variabke name then type
+8- in case not clear 'func' is to declare functions
+9- params are passed as func name(param dataType){}
+10- if return, format is 'func name() return type{}
+11- conditions are without brackets
+12- you can return errors from functions, an error default value is 'nil
+13- 'error' is a data type and to init var e error. //condition? -> e=errors.New("message")
+13.5- very much like exceptions in java
+14- "errors" is an import like "fmt"
+15- for arrays put [size]dataType
+15.5- you can access elements from n to m using [n:m] much like python
+16- a slice 'var name []int' is a vector/ dynamic array??
+17- 'map' is map dataType and can be init using 'make(map[dataType key]dataType values)
+18- you can for loop like python (for x := range range{})
+19- or for i:=0; i<10; i++ (the classic way)
+20- using 'go' before function call calls it concurrentlly, but needs protection for the rest of main code to not be excuted and exit before the sub tasks are finished
+21- import "sync" and write 'var wg = sync.WaitGroup{}' (basically a counter)
+22- add 'wg.Add(1) ....code.... wg.Wait()'
+22.5- semaphores and concurrency all over again :__ )
+23- sync.Mutex :') m.Lock and m.Unlock for lock and release
+24- generics work like templates ?
