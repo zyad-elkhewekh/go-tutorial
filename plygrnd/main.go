@@ -24,7 +24,7 @@ func main() {
 		//target point = (x, y)
 		//user start point = (a, b)
 
-		fmt.Print("Enter where you want to start (a, b): ")
+		fmt.Println("Enter where you want to start (a, b): ")
 		fmt.Scanln(&a, &b)
 		var dist float64 = math.Abs(float64(a)-float64(x)) + math.Abs(float64(b)-float64(y))
 
@@ -34,7 +34,7 @@ func main() {
 		//reset target if coincides with user start
 
 		var vi, vj rune
-		fmt.Print("enter direction of motion (+ or -): ")
+		fmt.Println("enter direction of motion (+ or -): ")
 		fmt.Scanln(&vi, &vj)
 
 		if vi == '+' {
