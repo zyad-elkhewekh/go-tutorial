@@ -7,12 +7,21 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
+type screen int
+
+const (
+	firstScreen screen = iota
+	secondScreen
+	thirdScreen
+)
+
 //the program (model) is split 3 way: init - update - view
 
 type model struct {
 	choices  []string
 	cursor   int
 	selected map[int]struct{}
+	screen   screen
 }
 
 // this should be a func to return init state of model
@@ -22,6 +31,7 @@ func initialModel() model {
 		choices: []string{"cpp", "c", "java", "python"},
 
 		selected: make(map[int]struct{}),
+		screen:   firstScreen,
 	}
 }
 
@@ -49,13 +59,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.cursor < len(m.choices)-1 {
 				m.cursor++
 			}
-		//enter or space to choose (toggle the state of choice)
-		case "enter", " ":
+		//space to choose (toggle the state of choice)
+		case " ":
 			_, ok := m.selected[m.cursor]
 			if ok {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
+			}
+		case "enter":
+			switch m.screen {
+			case firstScreen:
+				m.screen = secondScreen
+			case secondScreen:
+				m.screen = thirdScreen
 			}
 		}
 	}
@@ -64,7 +81,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	s := "what are your favourite languages out of these?\n\n"
+	switch m.screen {
+	case firstScreen:
+		return m.firstView()
+	case secondScreen:
+		return m.secView()
+	case thirdScreen:
+		return m.thrdView()
+	default:
+		return ""
+	}
+}
+
+func (m model) firstView() string {
+	s := "what are your favourite languages out of these? (press space to pick and enter to confirm)\n\n"
 
 	for i, choice := range m.choices {
 		cursor := " "
@@ -77,6 +107,56 @@ func (m model) View() string {
 		}
 
 		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+	}
+	s += "\nPress q to quit.\n"
+	return s
+}
+func (m model) secView() string {
+	s := "what are your most frequently used languages out of these? (ignore likability)\n\n"
+
+	for i, choice := range m.choices {
+		cursor := " "
+		if m.cursor == i {
+			cursor = ">" //this is the actual cursor visually
+		}
+		checked := " "
+		if _, ok := m.selected[i]; ok {
+			checked = "x"
+		}
+
+		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+	}
+	s += "\nPress q to quit.\n"
+	return s
+}
+
+func (m model) thrdView() string {
+	s := "you\n\n"
+	var lifeIndx int = 0
+	var mastery int = 0
+	for i := range m.selected {
+		switch m.choices[i] {
+		case "python":
+			mastery--
+			lifeIndx++
+		case "cpp":
+			mastery++
+			lifeIndx--
+		case "c":
+			mastery += 2
+			lifeIndx -= 2
+		case "java":
+			mastery++
+			lifeIndx++
+		}
+	}
+
+	if mastery >= 3 || lifeIndx < 2 {
+		s += "\n need to touch grass\n"
+	} else if mastery < 0 {
+		s += "need to learn how to code!\n"
+	} else {
+		s += "\nwitch!\n"
 	}
 	s += "\nPress q to quit.\n"
 	return s
