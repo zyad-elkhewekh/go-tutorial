@@ -1,0 +1,9 @@
+DBG: 2026/02/13 21:14:33 question: name: , answer: hello
+DBG: 2026/02/13 22:02:22 question: name: , answer: zyad
+DBG: 2026/02/13 22:02:24 question: level: , answer: 3
+DBG: 2026/02/13 22:02:27 question: id: , answer: 123
+DBG: 2026/02/13 22:02:33 question: email: , answer: zyad@lol.com
+DBG: 2026/02/13 22:02:58 question: dummy answer: , answer: cd ../..
+touch file1
+nano file1
+cat file1
