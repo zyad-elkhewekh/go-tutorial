@@ -5,15 +5,15 @@ import (
 	"net/http"
 )
 
-type choicesParam struct {
+type ChoicesParam struct {
 	language string
 }
 
-type choicesResponse struct {
+type ChoicesResponse struct {
 	//margin for success status 200 etc
-	code int
+	Code int
 
-	information string
+	Information string
 }
 
 type Error struct {

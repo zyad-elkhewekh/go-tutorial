@@ -11,7 +11,7 @@ import (
 )
 
 func getChoices(w http.ResponseWriter, r *http.Request) {
-	var params = api.choicesParam{}
+	var params = api.ChoicesParam{}
 	var decoder *schema.Decoder = schema.NewDecoder()
 	var err error
 	err = decoder.Decode(&params, r.URL.Query())
@@ -22,7 +22,7 @@ func getChoices(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var databse *tools.DatabaseInterface
+	var database *tools.DatabaseInterface
 	database, err = tools.NewDatabase()
 	if err != nil {
 		api.InternalErrorHandler(w)
@@ -30,16 +30,16 @@ func getChoices(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tokenDetails *tools.ChoiceDetails
-	tokenDetails = (*database).SetUserChoice(params.username)
+	tokenDetails = (*database).GetUserChoice(params.username)
 	if tokenDetails == nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)
 		return
 	}
 
-	var response = api.choicesResponse{
-		choice: (*tokenDetails).choice,
-		code:   http.StatusOK,
+	var response = api.ChoicesResponse{
+		Information: (*tokenDetails).Choice,
+		Code:        http.StatusOK,
 	}
 
 	w.Header().Set("Content-Type", "application/json")

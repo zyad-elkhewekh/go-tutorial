@@ -13,7 +13,7 @@ func Handler(r *chi.Mux) {
 
 	r.Route("/choice", func(router chi.Router) {
 
-		router.Use(middleware.Authorization)
+		router.Use(middleware.Authorize)
 		router.Get("/choice", getChoices)
 	})
 }

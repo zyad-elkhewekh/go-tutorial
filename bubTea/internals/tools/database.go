@@ -4,17 +4,17 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type loginDetails struct {
+type LoginDetails struct {
 	AuthToken string
 	username  string
 }
 type ChoiceDetails struct {
-	choice   string
+	Choice   string
 	username string
 }
 
 type DatabaseInterface interface {
-	GetUserLoginDetails(username string) *loginDetails
+	GetUserLoginDetails(username string) *LoginDetails
 	GetUserChoice(username string) *ChoiceDetails
 	SetUpDatabase() error
 }
