@@ -1,4 +1,4 @@
-module bubbleTea
+module github.com/zyad-elkhewekh/go-tutorial/bubTea
 
 go 1.25.6
 
