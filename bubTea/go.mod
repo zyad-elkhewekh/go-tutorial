@@ -2,7 +2,10 @@ module bubbleTea
 
 go 1.25.6
 
-require github.com/charmbracelet/bubbletea v1.3.10
+require (
+	github.com/charmbracelet/bubbletea v1.3.10
+	github.com/sirupsen/logrus v1.9.4
+)
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
