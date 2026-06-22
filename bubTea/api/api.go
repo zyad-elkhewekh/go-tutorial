@@ -7,6 +7,7 @@ import (
 
 type ChoicesParam struct {
 	language string
+	Username string
 }
 
 type ChoicesResponse struct {

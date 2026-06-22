@@ -30,7 +30,7 @@ func getChoices(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tokenDetails *tools.ChoiceDetails
-	tokenDetails = (*database).GetUserChoice(params.username)
+	tokenDetails = (*database).GetUserChoice(params.Username)
 	if tokenDetails == nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)

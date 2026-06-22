@@ -6,7 +6,7 @@ import (
 
 type mockDB struct{}
 
-var mockLoginDetails = map[string]loginDetails{
+var mockLoginDetails = map[string]LoginDetails{
 	"zyad": {
 		AuthToken: "123abc",
 		username:  "zyad",
@@ -18,19 +18,19 @@ var mockLoginDetails = map[string]loginDetails{
 }
 var mockChoiceDetails = map[string]ChoiceDetails{
 	"zyad": {
-		choice:   "cpp",
+		Choice:   "cpp",
 		username: "zyad",
 	},
 	"salah": {
-		choice:   "java",
+		Choice:   "java",
 		username: "salah",
 	},
 }
 
-func (d *mockDB) GetUserLoginDetails(username string) *loginDetails {
+func (d *mockDB) GetUserLoginDetails(username string) *LoginDetails {
 	time.Sleep(time.Second * 1)
 
-	var cleintData = loginDetails{}
+	var cleintData = LoginDetails{}
 	cleintData, ok := mockLoginDetails[username]
 	if !ok {
 		return nil
