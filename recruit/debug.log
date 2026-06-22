@@ -7,3 +7,39 @@ DBG: 2026/02/13 22:02:58 question: dummy answer: , answer: cd ../..
 touch file1
 nano file1
 cat file1
+DBG: 2026/02/13 22:09:05 question: name: , answer: zyad
+DBG: 2026/02/13 22:10:26 question: name: , answer: zyad
+DBG: 2026/02/13 22:10:28 question: level: , answer: 3
+DBG: 2026/02/13 22:10:30 question: id: , answer: 123
+DBG: 2026/02/13 22:10:37 question: email: , answer: zyad@lol.com
+DBG: 2026/02/13 22:10:59 question: dummy answer: , answer: cd ../..
+touch file1
+nano file1
+cat file1
+DBG: 2026/02/13 22:11:01 question: name: , answer: zyad
+DBG: 2026/02/13 22:11:01 question: level: , answer: 3
+DBG: 2026/02/13 22:11:02 question: id: , answer: 123
+DBG: 2026/02/13 22:11:02 question: email: , answer: zyad@lol.com
+DBG: 2026/02/13 22:32:07 question: name: , answer: sdasd
+DBG: 2026/02/13 22:32:09 question: level: , answer: sdff
+DBG: 2026/02/13 22:32:11 question: id: , answer: sfdfs
+DBG: 2026/02/13 22:32:12 question: email: , answer: sdsr
+DBG: 2026/02/13 22:32:21 question: dummy answer: , answer: asd
+erdrf
+dfdf
+dfdf
+DBG: 2026/02/13 22:32:23 question: name: , answer: sdasd
+DBG: 2026/02/13 22:32:25 question: level: , answer: sdff
+DBG: 2026/02/13 22:32:26 question: id: , answer: sfdfs
+DBG: 2026/02/13 22:32:26 question: email: , answer: sdsr
+DBG: 2026/02/13 22:32:27 question: dummy answer: , answer: asd
+erdrf
+dfdf
+dfdf
+DBG: 2026/02/19 12:04:35 question: name: , answer: zyad
+DBG: 2026/02/19 12:04:42 question: level: , answer: 3
+DBG: 2026/02/19 12:04:45 question: id: , answer: 123
+DBG: 2026/02/19 12:05:08 question: email: , answer: email@lol.com
+DBG: 2026/02/19 12:05:16 question: dummy answer: , answer: 1
+2
+3

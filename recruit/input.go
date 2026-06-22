@@ -36,13 +36,13 @@ type LongAnswerField struct {
 
 func NewLongAnswerField() *LongAnswerField {
 	ta := textarea.New()
-	ta.Placeholder = "answer here"
+	ta.Placeholder = "ctrl+s to save +c to exit"
 	ta.Focus()
 	return &LongAnswerField{ta}
 }
 func NewShortAnswerField() *ShortAnswerField {
 	ti := textinput.New()
-	ti.Placeholder = "answer here"
+	ti.Placeholder = "ctrl+s to save +c to exit"
 	ti.Focus()
 	return &ShortAnswerField{ti}
 }
