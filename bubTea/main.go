@@ -78,6 +78,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			switch m.screen {
 			case firstScreen:
 				m.screen = secondScreen
+				m.selected = make(map[int]struct{}) // reset for screen 2
+				m.cursor = 0
 			case secondScreen:
 				m.screen = thirdScreen
 			}
@@ -176,12 +178,13 @@ func main() {
 	var r *chi.Mux = chi.NewRouter()
 	handlers.Handler(r)
 
-	fmt.Println("starting my first api..")
-
-	err := http.ListenAndServe("localhost:8080", r)
-	if err != nil {
-		log.Error(err)
-	}
+	go func() {
+		fmt.Println("starting my first api..")
+		err := http.ListenAndServe("localhost:8080", r)
+		if err != nil {
+			log.Error(err)
+		}
+	}()
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
