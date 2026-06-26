@@ -32,8 +32,11 @@ func getChoices(w http.ResponseWriter, r *http.Request) {
 	var tokenDetails *tools.ChoiceDetails
 	tokenDetails = (*database).GetUserChoice(params.Username)
 	if tokenDetails == nil {
-		log.Error(err)
-		api.InternalErrorHandler(w)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(map[string]string{
+			"message": "user not found",
+		})
 		return
 	}
 

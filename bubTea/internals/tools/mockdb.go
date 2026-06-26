@@ -19,24 +19,24 @@ var mockLoginDetails = map[string]LoginDetails{
 var mockChoiceDetails = map[string]ChoiceDetails{
 	"zyad": {
 		Choice:   "cpp",
-		username: "zyad",
+		Username: "zyad",
 	},
 	"salah": {
 		Choice:   "java",
-		username: "salah",
+		Username: "salah",
 	},
 }
 
-func (d *mockDB) GetUserLoginDetails(username string) *LoginDetails {
-	time.Sleep(time.Second * 1)
+// func (d *mockDB) GetUserLoginDetails(username string) *LoginDetails {
+// 	time.Sleep(time.Second * 1)
 
-	var cleintData = LoginDetails{}
-	cleintData, ok := mockLoginDetails[username]
-	if !ok {
-		return nil
-	}
-	return &cleintData
-}
+// 	var cleintData = LoginDetails{}
+// 	cleintData, ok := mockLoginDetails[username]
+// 	if !ok {
+// 		return nil
+// 	}
+// 	return &cleintData
+// }
 
 func (d *mockDB) GetUserChoice(username string) *ChoiceDetails {
 	time.Sleep(time.Second * 1)
@@ -52,3 +52,10 @@ func (d *mockDB) GetUserChoice(username string) *ChoiceDetails {
 func (d *mockDB) SetUpDatabase() error {
 	return nil
 }
+
+// func (d *mockDB) SetUpUser(username string, choice string) {
+// 	mockChoiceDetails[username] = ChoiceDetails{
+// 		Choice:   choice,
+// 		Username: username,
+// 	}
+// }

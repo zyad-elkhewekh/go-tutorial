@@ -46,3 +46,8 @@ var (
 		writeError(w, "unexpected error", http.StatusInternalServerError)
 	}
 )
+
+type SubmitChoiceRequest struct {
+	Username string `json:"username"`
+	Choice   string `json:"choice"`
+}

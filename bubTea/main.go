@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"net/http"
 
@@ -12,12 +15,14 @@ import (
 
 	//for api
 	tea "github.com/charmbracelet/bubbletea"
+	//"github.com/zyad-elkhewekh/go-tutorial/bubTea/internals/tools"
 )
 
 type screen int
 
 const (
-	firstScreen screen = iota
+	namescreen screen = iota
+	firstScreen
 	secondScreen
 	thirdScreen
 )
@@ -29,6 +34,7 @@ type model struct {
 	cursor   int
 	selected map[int]struct{}
 	screen   screen
+	username string
 }
 
 // this should be a func to return init state of model
@@ -38,7 +44,7 @@ func initialModel() model {
 		choices: []string{"cpp", "c", "java", "python"},
 
 		selected: make(map[int]struct{}),
-		screen:   firstScreen,
+		screen:   namescreen,
 	}
 }
 
@@ -55,6 +61,25 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 
+		if m.screen == namescreen {
+			switch msg.String() {
+			case "ctrl+c":
+				return m, tea.Quit
+			case "enter":
+				if m.username != "" {
+					m.screen = firstScreen
+				}
+			case "backspace":
+				if len(m.username) > 0 {
+					m.username = m.username[:len(m.username)-1]
+				}
+			default:
+				if len(msg.String()) == 1 {
+					m.username += msg.String()
+				}
+			}
+			return m, nil
+		}
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
@@ -76,12 +101,30 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		case "enter":
 			switch m.screen {
+			case namescreen:
+				switch msg.String() {
+				case "enter":
+					if m.username != "" {
+						m.screen = firstScreen
+					}
+				case "backspace":
+					if len(m.username) > 0 {
+						m.username = m.username[:len(m.username)-1]
+					}
+				default:
+					// only append printable single chars
+					if len(msg.String()) == 1 {
+						m.username += msg.String()
+					}
+				}
 			case firstScreen:
 				m.screen = secondScreen
-				m.selected = make(map[int]struct{}) // reset for screen 2
+				m.saveChoices()
+				//m.selected = make(map[int]struct{}) // reset for screen 2
 				m.cursor = 0
 			case secondScreen:
 				m.screen = thirdScreen
+				m.saveChoices()
 			}
 		}
 	}
@@ -91,6 +134,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	switch m.screen {
+	case namescreen:
+		return m.nameView()
 	case firstScreen:
 		return m.firstView()
 	case secondScreen:
@@ -100,6 +145,10 @@ func (m model) View() string {
 	default:
 		return ""
 	}
+}
+
+func (m model) nameView() string {
+	return fmt.Sprintf("Enter your username:\n\n> %s\n\nPress enter to continue.", m.username)
 }
 
 func (m model) firstView() string {
@@ -169,6 +218,29 @@ func (m model) thrdView() string {
 	}
 	s += "\nPress q to quit.\n"
 	return s
+}
+
+func (m model) saveChoices() {
+	var picked []string
+	for i := range m.selected {
+		picked = append(picked, m.choices[i])
+	}
+
+	body, _ := json.Marshal(map[string]string{
+		"username": m.username,
+		"choice":   strings.Join(picked, ","),
+	})
+
+	resp, err := http.Post(
+		"http://localhost:8080/choice",
+		"application/json",
+		bytes.NewBuffer(body),
+	)
+	if err != nil {
+		log.Error(err)
+		return
+	}
+	defer resp.Body.Close()
 }
 
 func main() {
